@@ -7,16 +7,14 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import validationUtils from '../../../utils/validationUtils';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
-import '../../../assets/scss/admin/students/createUpdateStudent.scss';
+import '../../../assets/scss/admin/teachers/createUpdateTeacher.scss';
 
 
-const CreateUpdateStudent = (props) => {
+const CreateUpdateTeacher = (props) => {
     const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
     const [fullName, setFullName] = useState("");
-    const [schoolYear, setSchoolYear] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [major, setMajor] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
     // Waiting when submit or save
@@ -26,9 +24,7 @@ const CreateUpdateStudent = (props) => {
     const handleClearForm = () => {
         setFullName('');
         setEmail('');
-        setMajor('');
         setPassword('');
-        setSchoolYear('');
     }
 
     const handleOnChange = (event) => {
@@ -42,14 +38,8 @@ const CreateUpdateStudent = (props) => {
             case 'email':
                 setEmail(event.target.value);
                 break;
-            case 'major':
-                setMajor(event.target.value);
-                break;
             case 'password':
                 setPassword(event.target.value);
-                break;
-            case 'schoolYear':
-                setSchoolYear(event.target.value);
                 break;
             default:
                 break;
@@ -62,10 +52,8 @@ const CreateUpdateStudent = (props) => {
             // let isValid = validationUtils.validate("createUpdateForm");
             if (true) {
                 setIsWaiting(true);
-                let data = await axios.post('api/students', {
+                let data = await axios.post('api/teachers', {
                     fullName,
-                    schoolYearId: +schoolYear,
-                    majorId: +major,
                     email,
                     password
                 });
@@ -74,7 +62,7 @@ const CreateUpdateStudent = (props) => {
                     setIsWaiting(false);
                     toast.success(data.EM);
                     handleClearForm();
-                    props.fetchStudents();
+                    props.fetchTeachers();
                 } else {
                     setIsWaiting(false);
                     toast.error(data.EM);
@@ -91,11 +79,9 @@ const CreateUpdateStudent = (props) => {
             // let isValid = validationUtils.validate("createUpdateForm");
             if (true) {
                 setIsWaiting(true);
-                let data = await axios.patch('api/students', {
-                    emailUpdate: props.studentUpdate.email,
+                let data = await axios.patch('api/teachers', {
+                    emailUpdate: props.teacherUpdate.email,
                     fullName,
-                    schoolYearId: +schoolYear,
-                    majorId: +major,
                     email,
                     password
                 });
@@ -105,7 +91,7 @@ const CreateUpdateStudent = (props) => {
                     handleClearForm();
                     props.setIsUpdate(false);
                     document.querySelector('.accordion-button').click();
-                    props.fetchStudents();
+                    props.fetchTeachers();
                 } else {
                     setIsWaiting(false);
                     toast.error(data.EM);
@@ -118,9 +104,9 @@ const CreateUpdateStudent = (props) => {
 
     const handleCancel = () => {
         handleClearForm();
-        // set về {} để thay đổi props.studentUpdate, tránh lỗi khi click cancel 
+        // set về {} để thay đổi props.teacherUpdate, tránh lỗi khi click cancel 
         // xong click lại edit component ko re-render  
-        props.setStudentUpdate({});
+        props.setTeacherUpdate({});
         props.setIsUpdate(false);
     }
 
@@ -134,20 +120,18 @@ const CreateUpdateStudent = (props) => {
 
     // Có warning ở đây, có thể là render quá nhiều lần, improve with redux
     useEffect(() => {
-        setFullName(props.studentUpdate.fullName);
-        setEmail(props.studentUpdate.email);
-        setMajor(props.studentUpdate.Major?.id);
-        setPassword(props.studentUpdate.password?.split(SECRET_KEY)[1]);
-        setSchoolYear(props.studentUpdate.SchoolYear?.id);
-    }, [props.studentUpdate])
+        setFullName(props.teacherUpdate.fullName);
+        setEmail(props.teacherUpdate.email);
+        setPassword(props.teacherUpdate.password?.split(SECRET_KEY)[1]);
+    }, [props.teacherUpdate])
 
 
     return (
         <>
             {props.isUpdate ?
-                <h3>Update Student:&nbsp;<span className='text-danger'>{fullName}</span></h3>
+                <h3>Update Teacher:&nbsp;<span className='text-danger'>{fullName}</span></h3>
                 :
-                <h3>Add New Student</h3>
+                <h3>Add New Teacher</h3>
             }
             <Form id='createUpdateForm' onKeyUp={(event) => handleEnter(event)}>
                 <FloatingLabel
@@ -165,45 +149,6 @@ const CreateUpdateStudent = (props) => {
                     />
                 </FloatingLabel>
 
-                <Form.Select
-                    className="mb-3"
-                    aria-label="Default select example"
-                    name='schoolYear'
-                    onChange={(event) => handleOnChange(event)}
-                    value={schoolYear}
-                >
-                    <option value={''}>School Year</option>
-                    {props.schoolYears && props.schoolYears.length > 0
-                        && props.schoolYears.map((schoolYear, index) => {
-                            return (
-                                <option
-                                    key={`schoolYear-${index}`}
-                                    value={schoolYear.id}
-                                >{schoolYear.description}</option>
-                            )
-                        })
-                    }
-                </Form.Select>
-
-                <Form.Select
-                    className="mb-3"
-                    aria-label="Default select example"
-                    name='major'
-                    value={major}
-                    onChange={(event) => handleOnChange(event)}
-                >
-                    <option value={''}>Major</option>
-                    {props.majors && props.majors.length > 0
-                        && props.majors.map((major, index) => {
-                            return (
-                                <option
-                                    key={`major-${index}`}
-                                    value={major.id}
-                                >{major.description}</option>
-                            )
-                        })
-                    }
-                </Form.Select>
 
                 <FloatingLabel
                     controlId="floatingInput"
@@ -269,4 +214,4 @@ const CreateUpdateStudent = (props) => {
     )
 }
 
-export default CreateUpdateStudent;
+export default CreateUpdateTeacher;

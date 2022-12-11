@@ -1,37 +1,23 @@
-import { useState } from "react";
-import { toast } from 'react-toastify';
-
-
-const Manage = (props) => {
-    const [majors, setMajors] = useState([]);
-
-    // Khi login success, sẽ gửi teacherId để lọc ra majors teacher đang dạy 
-    const getAllMajors = async () => {
-        try {
-            let data = await axios.get(`api/majors`);
-            if (data && data.EC === 0) {
-                toast.success(data.EM);
-                setMajors(data.DT);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-
-
+const ManageTeachers = (props) => {
     return (
         <>
-            <div className="w-100 mt-3 d-flex gap-3 justify-content-center ">
-                <select className="form-select w-25" aria-label="Default select example">
+            <div className="w-100 mt-3 d-flex gap-3 justify-content-center">
+                <select className="form-select" aria-label="Default select example">
+                    <option>Chose khoa</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+
+                <select className="form-select" aria-label="Default select example">
                     <option>Chose ngành học</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                 </select>
 
-                <select className="form-select w-25" aria-label="Default select example">
-                    <option>Chose nhóm lớp</option>
+                <select className="form-select" aria-label="Default select example">
+                    <option>Chose phòng</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -71,4 +57,4 @@ const Manage = (props) => {
     )
 }
 
-export default Manage;
+export default ManageTeachers;

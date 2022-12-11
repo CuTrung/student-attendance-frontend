@@ -2,6 +2,7 @@ import CRUDStudent from "./CRUDStudents";
 import ManageStudents from "./manageStudents";
 import Accordion from 'react-bootstrap/Accordion';
 import { useEffect } from "react";
+import IndexStudent_ClassGroup from "./student_classGroup/indexStudent_ClassGroups";
 
 const IndexStudents = (props) => {
 
@@ -19,6 +20,12 @@ const IndexStudents = (props) => {
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
+                <Accordion.Header>Set ClassGroups For Students</Accordion.Header>
+                <Accordion.Body>
+                    <IndexStudent_ClassGroup />
+                </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
                 <Accordion.Header>Manage Students</Accordion.Header>
                 <Accordion.Body>
                     <ManageStudents />

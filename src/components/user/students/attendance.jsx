@@ -22,9 +22,8 @@ const Attendance = (props) => {
             if (isValid && user?.email) {
                 // setIsWaiting(true);
                 let data = await axios.post('api/attendance', {
-                    showId: classGroupCode,
+                    showCode: classGroupCode,
                 });
-
 
                 if (data && data.EC === 0) {
                     // window.sessionStorage.setItem("user", JSON.stringify(data.DT))

@@ -1,9 +1,17 @@
-table {
+.listTeachers {
     display      : block;
     min-height   : 10%;
     // min-width : 100vh;
 
     td {
-        min-width: 11.3vw;
+        min-width: 13.4vw;
+
+        &:first-child {
+            min-width: 3vw;
+        }
+
+        &.schoolYear {
+            min-width: 3vw;
+        }
     }
 }

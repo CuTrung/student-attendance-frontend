@@ -4,11 +4,11 @@ import Button from 'react-bootstrap/Button';
 import { useEffect } from 'react';
 import axios from '../../../configs/axios';
 import MyPagination from '../../both/pagination';
-import '../../../assets/scss/admin/students/listStudents.scss';
+import '../../../assets/scss/admin/teachers/listTeachers.scss';
 import { toast } from 'react-toastify';
 import LoadingIcon from '../../both/loadingIcon';
 
-const ListStudents = (props) => {
+const ListTeachers = (props) => {
     const handleActiveDelete = async (email, type) => {
         try {
             let isDeleted;
@@ -16,12 +16,12 @@ const ListStudents = (props) => {
                 isDeleted = type === 'ACTIVE' ? '0' : '1';
             }
 
-            let data = await axios.delete('api/students', {
+            let data = await axios.delete('api/teachers', {
                 data: { email, isDeleted },
             });
             if (data && data.EC === 0) {
                 toast.success(data.EM);
-                props.fetchStudents();
+                props.fetchTeachers();
             }
         } catch (error) {
             toast.error(data.EM);
@@ -29,8 +29,8 @@ const ListStudents = (props) => {
         }
     }
 
-    const handleEdit = (studentUpdate) => {
-        props.getStudentUpdate(studentUpdate);
+    const handleEdit = (teacherUpdate) => {
+        props.getTeacherUpdate(teacherUpdate);
         props.setIsUpdate(true);
         if (document.querySelector('.accordion-button').classList.contains('collapsed')) {
             document.querySelector('.accordion-button').click();
@@ -48,41 +48,37 @@ const ListStudents = (props) => {
                 <LoadingIcon />
                 :
                 <>
-                    <Table className='listStudents my-4 ' bordered hover>
+                    <Table className='listTeachers my-4 ' bordered hover>
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Full name</th>
                                 <th>Email</th>
-                                <th>School year</th>
-                                <th>Major</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {props.listStudents && props.listStudents.length > 0
-                                && props.listStudents.map((student, index) => {
+                            {props.listTeachers && props.listTeachers.length > 0
+                                && props.listTeachers.map((teacher, index) => {
                                     return (
-                                        <tr key={`student-${index + 1}`}>
+                                        <tr key={`teacher-${index + 1}`}>
                                             <td>{index + 1}</td>
-                                            <td>{student.fullName}</td>
-                                            <td>{student.email}</td>
-                                            <td className='schoolYear'>{student.SchoolYear.description}</td>
-                                            <td>{student.Major.description}</td>
+                                            <td>{teacher.fullName}</td>
+                                            <td>{teacher.email}</td>
                                             <td className='d-flex gap-1'>
                                                 <Button className='btn btn-warning'
-                                                    onClick={() => handleEdit(student)}
+                                                    onClick={() => handleEdit(teacher)}
                                                 >Edit</Button>
 
                                                 <Button
-                                                    name={student.isDeleted === 0 ? 'INACTIVE' : 'ACTIVE'}
-                                                    className={`btn ${student.isDeleted === 0 ? 'btn-secondary' : 'btn-success'}`}
-                                                    onClick={(event) => handleActiveDelete(student.email, event.target.name)}>
-                                                    {student.isDeleted === 0 ? 'Inactive' : 'Active'}
+                                                    name={teacher.isDeleted === 0 ? 'INACTIVE' : 'ACTIVE'}
+                                                    className={`btn ${teacher.isDeleted === 0 ? 'btn-secondary' : 'btn-success'}`}
+                                                    onClick={(event) => handleActiveDelete(teacher.email, event.target.name)}>
+                                                    {teacher.isDeleted === 0 ? 'Inactive' : 'Active'}
                                                 </Button>
 
                                                 <Button className='btn btn-danger'
-                                                    onClick={() => handleActiveDelete(student.email)}>
+                                                    onClick={() => handleActiveDelete(teacher.email)}>
                                                     Delete
                                                 </Button>
                                             </td>
@@ -108,4 +104,4 @@ const ListStudents = (props) => {
     )
 }
 
-export default ListStudents;
+export default ListTeachers;

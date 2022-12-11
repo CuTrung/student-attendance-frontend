@@ -102,9 +102,9 @@ const Login = () => {
                         />
                         <span onClick={() => setShowPassword(!showPassword)} className="eye position-absolute top-50 end-0 translate-middle-y">
                             {showPassword ?
-                                <FaEye size={'24px'} />
-                                :
                                 <FaEyeSlash size={'24px'} />
+                                :
+                                <FaEye size={'24px'} />
                             }
                         </span>
                     </FloatingLabel>

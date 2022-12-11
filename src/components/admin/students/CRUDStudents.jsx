@@ -37,7 +37,7 @@ const CRUDStudent = (props) => {
 
     const getAllSchoolYears = async () => {
         try {
-            let data = await axios.get(`api/school-years`);
+            let data = await axios.get(`api/schoolYears`);
             if (data && data.EC === 0) {
                 toast.success(data.EM);
                 setSchoolYears(data.DT);
@@ -74,7 +74,7 @@ const CRUDStudent = (props) => {
     }, [])
 
     useEffect(() => {
-        getStudents();
+        fetchStudents();
     }, [currentPage])
 
 
@@ -88,6 +88,7 @@ const CRUDStudent = (props) => {
                 isUpdate={isUpdate}
                 setIsUpdate={setIsUpdate}
                 studentUpdate={studentUpdate}
+                setStudentUpdate={setStudentUpdate}
                 isLoading={isLoading}
             />
             <ListStudents

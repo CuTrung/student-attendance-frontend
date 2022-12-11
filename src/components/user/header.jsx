@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from "react-router-dom";
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Button from 'react-bootstrap/Button';
 
 
@@ -15,6 +15,8 @@ const Header = () => {
     useEffect(() => {
         setUser(JSON.parse(window.sessionStorage.getItem("user")))
     }, []);
+
+
 
     return (
         <Navbar bg="light" expand="lg">
